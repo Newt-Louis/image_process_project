@@ -5,7 +5,7 @@
 ## Cấu Trúc Thư Mục
 
 ```
-demo_app/
+image_process_project/
 ├── main.py              # File chứa API server FastAPI
 ├── requirements.txt     # Các thư viện cần cài đặt
 └── static/              # Chứa các file giao diện tĩnh

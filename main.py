@@ -22,11 +22,11 @@ app = FastAPI(title="Automatic Checkout Demo")
 # }
 
 # Mount thư mục static để phục vụ file HTML/CSS/JS
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="demo_app/static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
-    with open("static/index.html", "r", encoding="utf-8") as f:
+    with open("demo_app/static/index.html", "r", encoding="utf-8") as f:
         return f.read()
 
 @app.post("/detect")

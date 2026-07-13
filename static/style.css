@@ -1,11 +1,11 @@
 :root {
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --text-main: #f8fafc;
-    --text-muted: #cbd5e1;
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --text-main: #1e293b;
+    --text-muted: #64748b;
 }
 
 body {
@@ -30,7 +30,7 @@ body {
     padding: 2.5rem;
     width: 100%;
     max-width: 900px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -43,7 +43,7 @@ header h1 {
     font-size: 2.5rem;
     font-weight: 800;
     margin: 0;
-    background: linear-gradient(to right, #818cf8, #c084fc);
+    background: linear-gradient(to right, #4338ca, #7e22ce);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -62,45 +62,48 @@ header p {
 .model-selection label {
     font-weight: 600;
     margin-right: 0.5rem;
+    color: var(--text-main);
 }
 
 .dropdown {
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    border: 1px solid var(--glass-border);
-    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #cbd5e1;
+    background: white;
     color: var(--text-main);
     font-family: inherit;
     font-size: 1rem;
     outline: none;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
 .dropdown:focus {
     border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
 }
 
 .dropdown option {
-    background: #1e1b4b;
-    color: white;
+    background: white;
+    color: var(--text-main);
 }
 
 .upload-section {
-    border: 2px dashed var(--glass-border);
+    border: 2px dashed #cbd5e1;
     border-radius: 16px;
     padding: 3rem 2rem;
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer;
-    background: rgba(0,0,0,0.2);
+    background: rgba(255, 255, 255, 0.5);
     position: relative;
     overflow: hidden;
 }
 
 .upload-section:hover, .upload-section.dragover {
     border-color: var(--primary);
-    background: rgba(99, 102, 241, 0.1);
+    background: rgba(79, 70, 229, 0.05);
 }
 
 #preview {
@@ -108,7 +111,7 @@ header p {
     max-height: 300px;
     border-radius: 12px;
     margin-top: 1rem;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
 }
 
 .primary-btn {
@@ -122,19 +125,19 @@ header p {
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: inherit;
-    box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.4);
 }
 
 .primary-btn:hover:not(.disabled) {
     background: var(--primary-hover);
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.5);
 }
 
 .primary-btn.disabled {
-    background: #475569;
+    background: #94a3b8;
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.8;
     box-shadow: none;
 }
 
@@ -153,24 +156,26 @@ header p {
 }
 
 .result-card {
-    background: rgba(0,0,0,0.3);
+    background: rgba(255, 255, 255, 0.7);
     border-radius: 16px;
     padding: 1.5rem;
     border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
 }
 
 .result-card h3 {
     margin-top: 0;
     margin-bottom: 1rem;
     font-size: 1.2rem;
-    color: #e2e8f0;
-    border-bottom: 1px solid var(--glass-border);
+    color: #0f172a;
+    border-bottom: 1px solid #e2e8f0;
     padding-bottom: 0.5rem;
 }
 
 #annotated-image {
     width: 100%;
     border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
 }
 
 .crops-grid {
@@ -180,12 +185,13 @@ header p {
 }
 
 .crop-item {
-    background: rgba(255,255,255,0.05);
+    background: white;
     border-radius: 12px;
     padding: 0.75rem;
     text-align: center;
-    border: 1px solid var(--glass-border);
-    transition: transform 0.2s;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s, border-color 0.2s;
 }
 
 .crop-item:hover {
@@ -202,6 +208,7 @@ header p {
 .crop-item span {
     font-size: 0.9rem;
     color: var(--text-muted);
+    font-weight: 500;
 }
 
 .loader {
@@ -212,7 +219,7 @@ header p {
 .spinner {
     width: 40px;
     height: 40px;
-    border: 4px solid var(--glass-border);
+    border: 4px solid #e2e8f0;
     border-top-color: var(--primary);
     border-radius: 50%;
     animation: spin 1s linear infinite;
