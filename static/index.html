@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Checkout - Detection Demo</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-container">
+        <header>
+            <h1>AI Auto Checkout Demo</h1>
+            <p>Upload an image to detect and crop products.</p>
+        </header>
+
+        <main>
+            <div class="model-selection">
+                <label for="model-select">Choose Model:</label>
+                <select id="model-select" class="dropdown">
+                    <option value="model_1">Model 1 (e.g. YOLOv8n)</option>
+                    <option value="model_2">Model 2 (e.g. YOLOv8s)</option>
+                    <option value="model_3">Model 3 (e.g. YOLOv9)</option>
+                </select>
+            </div>
+
+            <div class="upload-section" id="drop-area">
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <button id="upload-btn" class="primary-btn">Choose Image</button>
+                <p>Or drag and drop your image here</p>
+                <img id="preview" src="" alt="Preview" style="display: none;">
+            </div>
+
+            <div class="controls">
+                <button id="detect-btn" class="primary-btn disabled" disabled>Run Detection</button>
+            </div>
+
+            <div class="loader" id="loader" style="display: none;">
+                <div class="spinner"></div>
+                <p>Processing image...</p>
+            </div>
+
+            <div class="results" id="results" style="display: none;">
+                <div class="result-card">
+                    <h3>Annotated Image</h3>
+                    <img id="annotated-image" src="" alt="Annotated">
+                </div>
+                
+                <div class="result-card">
+                    <h3>Detected Objects (Cropped)</h3>
+                    <div id="crops-container" class="crops-grid">
+                        <!-- Cropped images will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
