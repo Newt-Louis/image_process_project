@@ -1,0 +1,340 @@
+{
+  "definitions": {
+    "missed": "Missed detection — sản phẩm bị bỏ sót (che khuất/chồng lấp)",
+    "false_pos": "False positive — báo nhầm nền/bóng đổ thành sản phẩm",
+    "double": "Double detection — 1 vật 2 box, NMS chưa gộp",
+    "loc_error": "Box lệch — IoU 0.3-0.5, kéo tụt mAP@0.75"
+  },
+  "conf_threshold": 0.25,
+  "match_iou": 0.5,
+  "loc_error_iou_range": [
+    0.3,
+    0.5
+  ],
+  "models": {
+    "yolov11": {
+      "n_images": 80,
+      "n_gt": 985,
+      "n_pred": 985,
+      "stats": {
+        "missed": {
+          "count": 3,
+          "n_images_affected": 3,
+          "rate_per_image": 0.0375,
+          "pct_of_gt": 0.305
+        },
+        "false_pos": {
+          "count": 1,
+          "n_images_affected": 1,
+          "rate_per_image": 0.0125,
+          "pct_of_pred": 0.102
+        },
+        "double": {
+          "count": 0,
+          "n_images_affected": 0,
+          "rate_per_image": 0.0,
+          "pct_of_pred": 0.0
+        },
+        "loc_error": {
+          "count": 2,
+          "n_images_affected": 1,
+          "rate_per_image": 0.025,
+          "pct_of_pred": 0.203
+        }
+      },
+      "examples": {
+        "missed": [
+          {
+            "image_id": 30364,
+            "file_name": "20180927-13-47-50-1789.jpg",
+            "n_errors": 1,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/yolov11__missed__20180927-13-47-50-1789.jpg"
+          },
+          {
+            "image_id": 18596,
+            "file_name": "20181016-11-26-31-1778.jpg",
+            "n_errors": 1,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/yolov11__missed__20181016-11-26-31-1778.jpg"
+          },
+          {
+            "image_id": 13828,
+            "file_name": "20180907-14-56-05-819.jpg",
+            "n_errors": 1,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/yolov11__missed__20180907-14-56-05-819.jpg"
+          }
+        ],
+        "false_pos": [
+          {
+            "image_id": 21254,
+            "file_name": "20181015-14-36-26-1680.jpg",
+            "n_errors": 1,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/yolov11__false_pos__20181015-14-36-26-1680.jpg"
+          }
+        ],
+        "loc_error": [
+          {
+            "image_id": 30353,
+            "file_name": "20180927-10-48-21-1959.jpg",
+            "n_errors": 2,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/yolov11__loc_error__20180927-10-48-21-1959.jpg"
+          }
+        ]
+      }
+    },
+    "fasterrcnn": {
+      "n_images": 80,
+      "n_gt": 985,
+      "n_pred": 1079,
+      "stats": {
+        "missed": {
+          "count": 13,
+          "n_images_affected": 9,
+          "rate_per_image": 0.1625,
+          "pct_of_gt": 1.32
+        },
+        "false_pos": {
+          "count": 18,
+          "n_images_affected": 11,
+          "rate_per_image": 0.225,
+          "pct_of_pred": 1.668
+        },
+        "double": {
+          "count": 21,
+          "n_images_affected": 20,
+          "rate_per_image": 0.2625,
+          "pct_of_pred": 1.946
+        },
+        "loc_error": {
+          "count": 68,
+          "n_images_affected": 35,
+          "rate_per_image": 0.85,
+          "pct_of_pred": 6.302
+        }
+      },
+      "examples": {
+        "missed": [
+          {
+            "image_id": 30353,
+            "file_name": "20180927-10-48-21-1959.jpg",
+            "n_errors": 2,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/fasterrcnn__missed__20180927-10-48-21-1959.jpg"
+          },
+          {
+            "image_id": 18596,
+            "file_name": "20181016-11-26-31-1778.jpg",
+            "n_errors": 2,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/fasterrcnn__missed__20181016-11-26-31-1778.jpg"
+          },
+          {
+            "image_id": 13828,
+            "file_name": "20180907-14-56-05-819.jpg",
+            "n_errors": 2,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/fasterrcnn__missed__20180907-14-56-05-819.jpg"
+          }
+        ],
+        "false_pos": [
+          {
+            "image_id": 30353,
+            "file_name": "20180927-10-48-21-1959.jpg",
+            "n_errors": 5,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/fasterrcnn__false_pos__20180927-10-48-21-1959.jpg"
+          },
+          {
+            "image_id": 21254,
+            "file_name": "20181015-14-36-26-1680.jpg",
+            "n_errors": 3,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/fasterrcnn__false_pos__20181015-14-36-26-1680.jpg"
+          },
+          {
+            "image_id": 17959,
+            "file_name": "20181017-13-27-37-1980.jpg",
+            "n_errors": 2,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/fasterrcnn__false_pos__20181017-13-27-37-1980.jpg"
+          }
+        ],
+        "double": [
+          {
+            "image_id": 20068,
+            "file_name": "20181016-15-45-31-2037.jpg",
+            "n_errors": 2,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/fasterrcnn__double__20181016-15-45-31-2037.jpg"
+          },
+          {
+            "image_id": 30353,
+            "file_name": "20180927-10-48-21-1959.jpg",
+            "n_errors": 1,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/fasterrcnn__double__20180927-10-48-21-1959.jpg"
+          },
+          {
+            "image_id": 29097,
+            "file_name": "20180920-17-04-27-1443.jpg",
+            "n_errors": 1,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/fasterrcnn__double__20180920-17-04-27-1443.jpg"
+          }
+        ],
+        "loc_error": [
+          {
+            "image_id": 30353,
+            "file_name": "20180927-10-48-21-1959.jpg",
+            "n_errors": 8,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/fasterrcnn__loc_error__20180927-10-48-21-1959.jpg"
+          },
+          {
+            "image_id": 20068,
+            "file_name": "20181016-15-45-31-2037.jpg",
+            "n_errors": 6,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/fasterrcnn__loc_error__20181016-15-45-31-2037.jpg"
+          },
+          {
+            "image_id": 21254,
+            "file_name": "20181015-14-36-26-1680.jpg",
+            "n_errors": 4,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/fasterrcnn__loc_error__20181015-14-36-26-1680.jpg"
+          }
+        ]
+      }
+    },
+    "retinanet": {
+      "n_images": 80,
+      "n_gt": 985,
+      "n_pred": 1486,
+      "stats": {
+        "missed": {
+          "count": 15,
+          "n_images_affected": 10,
+          "rate_per_image": 0.1875,
+          "pct_of_gt": 1.523
+        },
+        "false_pos": {
+          "count": 8,
+          "n_images_affected": 7,
+          "rate_per_image": 0.1,
+          "pct_of_pred": 0.538
+        },
+        "double": {
+          "count": 102,
+          "n_images_affected": 48,
+          "rate_per_image": 1.275,
+          "pct_of_pred": 6.864
+        },
+        "loc_error": {
+          "count": 406,
+          "n_images_affected": 76,
+          "rate_per_image": 5.075,
+          "pct_of_pred": 27.322
+        }
+      },
+      "examples": {
+        "missed": [
+          {
+            "image_id": 18596,
+            "file_name": "20181016-11-26-31-1778.jpg",
+            "n_errors": 3,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/retinanet__missed__20181016-11-26-31-1778.jpg"
+          },
+          {
+            "image_id": 21254,
+            "file_name": "20181015-14-36-26-1680.jpg",
+            "n_errors": 2,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/retinanet__missed__20181015-14-36-26-1680.jpg"
+          },
+          {
+            "image_id": 13828,
+            "file_name": "20180907-14-56-05-819.jpg",
+            "n_errors": 2,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/retinanet__missed__20180907-14-56-05-819.jpg"
+          }
+        ],
+        "false_pos": [
+          {
+            "image_id": 28808,
+            "file_name": "20181012-14-24-33-3330.jpg",
+            "n_errors": 2,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/retinanet__false_pos__20181012-14-24-33-3330.jpg"
+          },
+          {
+            "image_id": 30364,
+            "file_name": "20180927-13-47-50-1789.jpg",
+            "n_errors": 1,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/retinanet__false_pos__20180927-13-47-50-1789.jpg"
+          },
+          {
+            "image_id": 27151,
+            "file_name": "20181023-16-16-15-45.jpg",
+            "n_errors": 1,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/retinanet__false_pos__20181023-16-16-15-45.jpg"
+          }
+        ],
+        "double": [
+          {
+            "image_id": 30353,
+            "file_name": "20180927-10-48-21-1959.jpg",
+            "n_errors": 5,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/retinanet__double__20180927-10-48-21-1959.jpg"
+          },
+          {
+            "image_id": 28887,
+            "file_name": "20180911-15-40-44-137.jpg",
+            "n_errors": 5,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/retinanet__double__20180911-15-40-44-137.jpg"
+          },
+          {
+            "image_id": 19924,
+            "file_name": "20180918-16-33-13-1024.jpg",
+            "n_errors": 5,
+            "level": "medium",
+            "output": "results/smoke/error_analysis/retinanet__double__20180918-16-33-13-1024.jpg"
+          }
+        ],
+        "loc_error": [
+          {
+            "image_id": 28887,
+            "file_name": "20180911-15-40-44-137.jpg",
+            "n_errors": 14,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/retinanet__loc_error__20180911-15-40-44-137.jpg"
+          },
+          {
+            "image_id": 30364,
+            "file_name": "20180927-13-47-50-1789.jpg",
+            "n_errors": 12,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/retinanet__loc_error__20180927-13-47-50-1789.jpg"
+          },
+          {
+            "image_id": 29020,
+            "file_name": "20180917-11-35-00-892.jpg",
+            "n_errors": 12,
+            "level": "hard",
+            "output": "results/smoke/error_analysis/retinanet__loc_error__20180917-11-35-00-892.jpg"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+
+# Dataset giải nén (4.2 GB) — sinh lại từ gold_dataset_detector_3models.zip
+data/gold_dataset/
+data/uploads/
+
+# Kết quả thực nghiệm (ảnh + predictions json rất nặng)
+results/*/predictions_*.json
+results/*/qualitative/
+results/*/error_analysis/
+results/*/onnx/
