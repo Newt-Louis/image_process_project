@@ -267,16 +267,33 @@ def build_markdown(tag, env, evals, slices, errors, rob, cpu) -> str:
     ]))
 
     sz = env["dataset"]["object_size_distribution_coco"]
+    rpc = sz.get("rpc_original_test2019")
     A(f"\n### 2.1. Giải thích `AP_medium = 0` (Mục 2.6 của bản hướng dẫn)\n")
-    A(C.md_table(["Nhóm kích thước (chuẩn COCO)", "Số object", "Tỉ lệ"],
-                 [[k, v, f"{100 * v / sz['total']:.4f}%"] for k, v in sz.items() if k != "total"]))
+    if rpc:
+        A(C.md_table(["Nhóm kích thước (chuẩn COCO)", "gold_dataset/test", "Tỉ lệ",
+                      "RPC gốc (test2019)", "Tỉ lệ"],
+                     [[k, sz[k], f"{100 * sz[k] / sz['total']:.4f}%",
+                       rpc[k], f"{100 * rpc[k] / rpc['total']:.4f}%"]
+                      for k in ("small (area < 32^2)", "medium (32^2 <= area < 96^2)",
+                                "large (area >= 96^2)")]))
+    else:
+        A(C.md_table(["Nhóm kích thước (chuẩn COCO)", "Số object", "Tỉ lệ"],
+                     [[k, v, f"{100 * v / sz['total']:.4f}%"] for k, v in sz.items()
+                      if k not in ("total", "rpc_original_test2019")]))
     n_med = sz["medium (32^2 <= area < 96^2)"]
     A(f"\nTest set gần như **toàn large-object**: chỉ {n_med} object thuộc nhóm *medium* và "
       f"{sz['small (area < 32^2)']} object *small* trên tổng {sz['total']}. Với cỡ mẫu nhỏ như vậy, "
       "chỉ cần model miss vài object là `AP_medium` tụt về 0 và `AP_small` là `-1` (COCO trả -1 khi "
-      "không có mẫu). **Đây không phải lỗi của model** — chỉ số này không có ý nghĩa thống kê trên "
-      "dataset RPC checkout và phải được ghi chú rõ khi đưa vào báo cáo. Chỉ số size đáng tin duy "
-      "nhất ở đây là `AP_large`.\n")
+      "không có mẫu). **Đây không phải lỗi của model.**")
+    if rpc:
+        A(f"\nQuan trọng: đây cũng **không phải do quá trình cắt gold_dataset** làm mất vật nhỏ. "
+          f"Kiểm chứng trên chính bộ RPC **gốc** `instances_test2019.json` (24.000 ảnh, "
+          f"{rpc['total']:,} object): vẫn chỉ có **{rpc['small (area < 32^2)']}** vật *small* và "
+          f"**{rpc['medium (32^2 <= area < 96^2)']}** vật *medium*. Ảnh RPC chụp từ trên xuống, sản "
+          "phẩm chiếm ~1/10 khung hình 1850px nên gần như không tồn tại vật small/medium theo "
+          "định nghĩa COCO — đây là **đặc điểm cố hữu của dataset**, không có file nào 'chữa' được. ")
+    A("Chỉ số size đáng tin duy nhất trên bài toán này là `AP_large`; `AP_small`/`AP_medium` "
+      "phải được ghi chú rõ khi đưa vào báo cáo.\n")
 
     A("### 2.2. Chênh lệch số epoch (95 vs 9)\n")
     A("YOLOv11 train 95 epoch (best@80); Faster R-CNN & RetinaNet chỉ 9 epoch (best@3). "
@@ -353,8 +370,14 @@ def build_markdown(tag, env, evals, slices, errors, rob, cpu) -> str:
             A("> ⚠️ `instances_test.json` của gold_dataset đã bị lược bỏ field `level` của RPC gốc. "
               "Level dưới đây được **suy ra từ số instance/ảnh** theo quy ước clutter của RPC ("
               + ", ".join(f"{n}={lo}–{hi}" for n, lo, hi in cfg.LEVEL_BINS)
-              + "). Phải ghi rõ điều này trong báo cáo. Nếu có `instances_test2019.json` gốc, "
-                "chạy lại với `--level-source` để dùng nhãn chuẩn.\n")
+              + "). Phải ghi rõ điều này trong báo cáo. Đặt `instances_test2019.json` gốc vào "
+                "`demo_app/data/` để tự động dùng nhãn chuẩn.\n")
+        else:
+            A("> Nhãn độ khó `level` (easy/medium/hard) lấy **trực tiếp từ annotation RPC gốc** "
+              "`instances_test2019.json` (join theo `file_name`, khớp 100% với gold_dataset/test) — "
+              "**không phải số suy đoán**. Phân bố: "
+              + ", ".join(f"{g}={slices['models'][ms[0]]['by_level'].get(g, {}).get('n_images', 0)}"
+                          for g in ("easy", "medium", "hard")) + " ảnh.\n")
         for kind, key, title in [("level", "by_level", "5.1. Theo độ khó (`level`)"),
                                  ("density", "by_density", "5.2. Theo mật độ sản phẩm/ảnh")]:
             groups = list(slices["models"][ms[0]][key])

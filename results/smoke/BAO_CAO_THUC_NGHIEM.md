@@ -1,6 +1,6 @@
 # Kết quả thực nghiệm 3 model detector (class-agnostic) — tag `smoke`
 
-*Sinh tự động bởi `experiments/make_report.py` lúc 2026-07-21 01:33:42.*
+*Sinh tự động bởi `experiments/make_report.py` lúc 2026-07-26 23:12:33.*
 
 ## 1. Môi trường thực nghiệm (local)
 
@@ -38,13 +38,16 @@
 
 ### 2.1. Giải thích `AP_medium = 0` (Mục 2.6 của bản hướng dẫn)
 
-| Nhóm kích thước (chuẩn COCO) | Số object | Tỉ lệ |
-|---|---|---|
-| small (area < 32^2) | 0 | 0.0000% |
-| medium (32^2 <= area < 96^2) | 7 | 0.0030% |
-| large (area >= 96^2) | 235741 | 99.9970% |
+| Nhóm kích thước (chuẩn COCO) | gold_dataset/test | Tỉ lệ | RPC gốc (test2019) | Tỉ lệ |
+|---|---|---|---|---|
+| small (area < 32^2) | 0 | 0.0000% | 0 | 0.0000% |
+| medium (32^2 <= area < 96^2) | 7 | 0.0030% | 10 | 0.0034% |
+| large (area >= 96^2) | 235741 | 99.9970% | 294323 | 99.9966% |
 
-Test set gần như **toàn large-object**: chỉ 7 object thuộc nhóm *medium* và 0 object *small* trên tổng 235748. Với cỡ mẫu nhỏ như vậy, chỉ cần model miss vài object là `AP_medium` tụt về 0 và `AP_small` là `-1` (COCO trả -1 khi không có mẫu). **Đây không phải lỗi của model** — chỉ số này không có ý nghĩa thống kê trên dataset RPC checkout và phải được ghi chú rõ khi đưa vào báo cáo. Chỉ số size đáng tin duy nhất ở đây là `AP_large`.
+Test set gần như **toàn large-object**: chỉ 7 object thuộc nhóm *medium* và 0 object *small* trên tổng 235748. Với cỡ mẫu nhỏ như vậy, chỉ cần model miss vài object là `AP_medium` tụt về 0 và `AP_small` là `-1` (COCO trả -1 khi không có mẫu). **Đây không phải lỗi của model.**
+
+Quan trọng: đây cũng **không phải do quá trình cắt gold_dataset** làm mất vật nhỏ. Kiểm chứng trên chính bộ RPC **gốc** `instances_test2019.json` (24.000 ảnh, 294,333 object): vẫn chỉ có **0** vật *small* và **10** vật *medium*. Ảnh RPC chụp từ trên xuống, sản phẩm chiếm ~1/10 khung hình 1850px nên gần như không tồn tại vật small/medium theo định nghĩa COCO — đây là **đặc điểm cố hữu của dataset**, không có file nào 'chữa' được. 
+Chỉ số size đáng tin duy nhất trên bài toán này là `AP_large`; `AP_small`/`AP_medium` phải được ghi chú rõ khi đưa vào báo cáo.
 
 ### 2.2. Chênh lệch số epoch (95 vs 9)
 
@@ -99,27 +102,27 @@ YOLOv11 train 95 epoch (best@80); Faster R-CNN & RetinaNet chỉ 9 epoch (best@3
 
 | Model | Latency p50 (ms) | p95 | p99 | mean | FPS | Size đĩa (MB) | Params (M) | VRAM infer (GB) | RAM RSS (GB) | Load model (s) |
 |---|---|---|---|---|---|---|---|---|---|---|
-| YOLOv11 | 7.46 | 8.78 | 9.72 | 7.61 | 131.35 | 18.29 | 9.428 | 0.108 | 1.677 | 0.47 |
-| Faster R-CNN | 58.6 | 64.44 | 65.17 | 59.79 | 16.72 | 158.03 | 41.352 | 0.554 | 1.837 | 0.607 |
-| RetinaNet | 59.42 | 61.28 | 62.7 | 59.59 | 16.78 | 123.2 | 32.222 | 0.362 | 1.976 | 0.381 |
+| YOLOv11 | 8.3 | 9.66 | 11.76 | 8.47 | 118.03 | 18.29 | 9.428 | 0.108 | 1.655 | 0.613 |
+| Faster R-CNN | 67.32 | 72.29 | 73.91 | 67.7 | 14.77 | 158.03 | 41.352 | 0.554 | 1.815 | 0.445 |
+| RetinaNet | 61.86 | 65.98 | 67.35 | 62.19 | 16.08 | 123.2 | 32.222 | 0.362 | 1.954 | 0.363 |
 
 *batch=1, đã warm-up 10 ảnh, đo trên 80 ảnh, device = `cuda`. Latency là end-to-end (tiền xử lý + inference + hậu xử lý/NMS), đã `cuda.synchronize()`.*
 
 
 ## 5. Bảng 3 — mAP theo lát cắt dữ liệu
 
-> ⚠️ `instances_test.json` của gold_dataset đã bị lược bỏ field `level` của RPC gốc. Level dưới đây được **suy ra từ số instance/ảnh** theo quy ước clutter của RPC (easy=3–10, medium=11–15, hard=16–20). Phải ghi rõ điều này trong báo cáo. Nếu có `instances_test2019.json` gốc, chạy lại với `--level-source` để dùng nhãn chuẩn.
+> Nhãn độ khó `level` (easy/medium/hard) lấy **trực tiếp từ annotation RPC gốc** `instances_test2019.json` (join theo `file_name`, khớp 100% với gold_dataset/test) — **không phải số suy đoán**. Phân bố: easy=24, medium=29, hard=27 ảnh.
 
 
 ### 5.1. Theo độ khó (`level`)
 
 | Model | easy | medium | hard |
 |---|---|---|---|
-| YOLOv11 | 0.8754 | 0.9023 | 0.8632 |
-| Faster R-CNN | 0.7986 | 0.8259 | 0.7612 |
-| RetinaNet | 0.7607 | 0.7611 | 0.6871 |
+| YOLOv11 | 0.9205 | 0.8673 | 0.8781 |
+| Faster R-CNN | 0.8154 | 0.8048 | 0.7773 |
+| RetinaNet | 0.7817 | 0.7550 | 0.6991 |
 
-*Số ảnh mỗi nhóm: easy=32, medium=27, hard=21*
+*Số ảnh mỗi nhóm: easy=24, medium=29, hard=27*
 
 
 ### 5.2. Theo mật độ sản phẩm/ảnh
@@ -156,19 +159,19 @@ YOLOv11 train 95 epoch (best@80); Faster R-CNN & RetinaNet chỉ 9 epoch (best@3
 | Tiêu chí (thứ tự ưu tiên, Mục 9) | Model thắng | Số liệu |
 |---|---|---|
 | 1. Độ chính xác (mAP50-95) | YOLOv11 | YOLOv11 0.8799 · Faster R-CNN 0.7912 · RetinaNet 0.7303 |
-| 2. Tốc độ (FPS) | YOLOv11 | YOLOv11 131.3 · Faster R-CNN 16.7 · RetinaNet 16.8 |
+| 2. Tốc độ (FPS) | YOLOv11 | YOLOv11 118.0 · Faster R-CNN 14.8 · RetinaNet 16.1 |
 | 3. Độ nhẹ (params) | YOLOv11 | YOLOv11 9.43M · Faster R-CNN 41.35M · RetinaNet 32.22M |
 
-**YOLOv11 vượt trội đồng thời cả độ chính xác lẫn tốc độ, lại nhẹ nhất** (nhanh hơn ~7.8×, ít tham số hơn ~4.4× so với model nặng nhất). Đây **không phải một đánh đổi** mà là **ưu thế toàn diện** → chốt **YOLOv11** làm detector cho hệ thống. Với đồ án tốt nghiệp, đặc tính nhẹ này càng phù hợp mục tiêu chạy trên thiết bị tài nguyên hạn chế.
+**YOLOv11 vượt trội đồng thời cả độ chính xác lẫn tốc độ, lại nhẹ nhất** (nhanh hơn ~7.3×, ít tham số hơn ~4.4× so với model nặng nhất). Đây **không phải một đánh đổi** mà là **ưu thế toàn diện** → chốt **YOLOv11** làm detector cho hệ thống. Với đồ án tốt nghiệp, đặc tính nhẹ này càng phù hợp mục tiêu chạy trên thiết bị tài nguyên hạn chế.
 
 
 ## 9. Đối chiếu với số liệu train (Colab A100)
 
 | Model | mAP50 (train) | mAP50 (local) | mAP50-95 (train) | mAP50-95 (local) | FPS (Colab) | FPS (local) |
 |---|---|---|---|---|---|---|
-| YOLOv11 | 0.99 | 0.9901 | 0.883 | 0.8799 | 100.5 | 131.35 |
-| Faster R-CNN | 0.989 | 0.9851 | 0.799 | 0.7912 | 37.6 | 16.72 |
-| RetinaNet | 0.981 | 0.9801 | 0.736 | 0.7303 | 39.3 | 16.78 |
+| YOLOv11 | 0.99 | 0.9901 | 0.883 | 0.8799 | 100.5 | 118.03 |
+| Faster R-CNN | 0.989 | 0.9851 | 0.799 | 0.7912 | 37.6 | 14.77 |
+| RetinaNet | 0.981 | 0.9801 | 0.736 | 0.7303 | 39.3 | 16.08 |
 
 *Cột 'train' lấy từ `comparison_results.json` để đối chiếu, KHÔNG dùng làm số local.*
 

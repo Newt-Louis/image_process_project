@@ -91,6 +91,9 @@ Hai thanh trượt **Confidence** và **NMS IoU** áp dụng chung cho cả 3 mo
 > Latency hiển thị trên UI chỉ mang tính tham khảo (có overhead HTTP + encode ảnh).
 > Số chính thức cho báo cáo lấy từ `run_eval.py`.
 
+**Kịch bản kiểm thử thủ công** (có bảng trống để điền tay khi chạy từng ảnh):
+xem `KICH_BAN_KIEM_THU.md`. 10 ảnh test mẫu đã đặt sẵn trong `data/uploads/`.
+
 ---
 
 ## 4. Chạy thực nghiệm — lấy đủ số liệu cho báo cáo
@@ -182,21 +185,20 @@ Tất cả nằm trong `config.py`, áp dụng **giống hệt** cho cả 3 mode
 
 ## 6. Ba điểm cần ghi rõ trong báo cáo
 
-**(a) `AP_medium = 0` không phải lỗi model.** Test set có 235.748 object thì
-**235.741 là large**, chỉ 7 object medium và 0 object small (chuẩn COCO). Cỡ mẫu quá nhỏ nên
-`AP_medium` không có ý nghĩa thống kê và `AP_small` trả `-1`. Script đã tự tính và giải thích
-số này ở mục 2.1 của báo cáo sinh ra.
+**(a) `AP_medium = 0` không phải lỗi model, cũng không phải do cắt gold_dataset.** Test set có
+235.748 object thì **235.741 là large**, chỉ 7 medium và 0 small (chuẩn COCO). Đã kiểm chứng
+trên chính bộ RPC **gốc** `instances_test2019.json` (24.000 ảnh, 294.333 object): vẫn **0 small,
+10 medium**. Ảnh RPC chụp từ trên xuống, sản phẩm chiếm ~1/10 khung hình 1850px nên gần như
+không có vật small/medium theo định nghĩa COCO — đây là **đặc điểm cố hữu của dataset, không có
+file nào chữa được**. `AP_small` trả `-1`, `AP_medium` ≈ 0; chỉ số size đáng tin duy nhất là
+`AP_large`. Báo cáo tự sinh bảng đối chiếu gold vs RPC-gốc ở mục 2.1.
 
-**(b) Nhãn `level` là proxy.** File `instances_test.json` của gold_dataset **đã bị lược bỏ
-field `level`** (easy/medium/hard) có trong annotation RPC gốc. Script suy ra level từ số
-instance/ảnh theo quy ước clutter của RPC (easy 3–10, medium 11–15, hard 16–20), cho ra
-7.471 / 6.383 / 5.346 ảnh — khớp tỉ lệ ~1/3 của RPC. Nếu bạn tải được
-`instances_test2019.json` gốc về, chạy với nhãn chuẩn:
-
-```bash
-python -m experiments.run_eval   --tag main --level-source /đường/dẫn/instances_test2019.json
-python -m experiments.run_slices --tag main --level-source /đường/dẫn/instances_test2019.json
-```
+**(b) Nhãn `level` — đã dùng nhãn RPC gốc (không còn proxy).** File `instances_test.json` của
+gold_dataset bị lược bỏ field `level`, nhưng **`demo_app/data/instances_test2019.json`** giữ
+nhãn gốc. Hệ thống **tự động** join theo `file_name` (khớp 100% với 19.200 ảnh gold/test) →
+Bảng 3 dùng nhãn chuẩn easy/medium/hard **6.395 / 6.401 / 6.404** ảnh, không phải số suy đoán.
+Không cần thao tác gì thêm; chỉ cần file đó nằm trong `demo_app/data/`. Muốn ép proxy để so
+sánh thì xoá/đổi tên file này đi.
 
 **(c) Chênh lệch epoch (95 vs 9).** Đang dùng phương án (b) của bản hướng dẫn — giữ nguyên và
 biện luận bằng learning curve. Bằng chứng có sẵn: `../fasterrcnn/learning_curves.png`,

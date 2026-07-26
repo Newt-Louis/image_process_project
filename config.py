@@ -16,6 +16,11 @@ DATA_DIR = APP_DIR / "data" / "gold_dataset"
 TEST_IMAGES_DIR = DATA_DIR / "images" / "test"
 TEST_ANN_FILE = DATA_DIR / "coco_annotations" / "instances_test.json"
 
+# Annotation RPC gốc (instances_test2019.json) chứa field `level` thật (easy/medium/hard).
+# Nếu file này tồn tại, TestSet tự join nhãn `level` thật theo file_name -> Bảng 3 dùng
+# nhãn chuẩn 100% thay vì proxy suy từ số instance/ảnh. Đặt file vào demo_app/data/ là xong.
+LEVEL_SOURCE_FILE = APP_DIR / "data" / "instances_test2019.json"
+
 RESULTS_DIR = APP_DIR / "results"
 UPLOADS_DIR = APP_DIR / "data" / "uploads"
 

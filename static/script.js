@@ -331,10 +331,7 @@ python -m experiments.make_report</pre>`;
       ${data.qualitative.map((q) => `<figure><a href="${q.url}" target="_blank">
         <img src="${q.url}" alt=""></a><figcaption><strong>${q.criterion}</strong> — ${q.description}
         <br>${q.file_name} · ${q.n_gt} sản phẩm · level ${q.level}</figcaption></figure>`).join('')}
-      </div>` : ''}
-
-    ${data.report_md ? `<p class="hint">Báo cáo đầy đủ:
-      <a href="${data.report_md}" target="_blank" style="color:var(--accent)">BAO_CAO_THUC_NGHIEM.md</a></p>` : ''}`;
+      </div>` : ''}`;
 }
 
 init();

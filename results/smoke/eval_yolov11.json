@@ -349,35 +349,35 @@
   "system": {
     "latency": {
       "n_samples": 80,
-      "mean_ms": 7.61,
-      "p50_ms": 7.46,
-      "p95_ms": 8.78,
-      "p99_ms": 9.72,
-      "min_ms": 7.07,
-      "max_ms": 9.73,
-      "fps": 131.35
+      "mean_ms": 8.47,
+      "p50_ms": 8.3,
+      "p95_ms": 9.66,
+      "p99_ms": 11.76,
+      "min_ms": 7.42,
+      "max_ms": 14.2,
+      "fps": 118.03
     },
     "latency_during_full_eval": {
       "n_samples": 80,
-      "mean_ms": 7.63,
-      "p50_ms": 7.5,
-      "p95_ms": 8.37,
-      "p99_ms": 9.32,
-      "min_ms": 7.12,
-      "max_ms": 10.16,
-      "fps": 131.1
+      "mean_ms": 8.13,
+      "p50_ms": 8.09,
+      "p95_ms": 8.85,
+      "p99_ms": 9.03,
+      "min_ms": 7.46,
+      "max_ms": 9.46,
+      "fps": 122.99
     },
     "model_size_mb": 18.29,
     "num_params": 9428179,
     "num_params_m": 9.428,
-    "load_time_s": 0.47,
+    "load_time_s": 0.613,
     "vram_peak_after_load_gb": 0.035,
     "vram_peak_infer_gb": 0.108,
     "vram_peak_full_eval_gb": 0.125,
-    "ram_rss_before_load_gb": 0.704,
+    "ram_rss_before_load_gb": 0.72,
     "ram_rss_after_load_gb": 0.87,
-    "ram_rss_running_gb": 1.677,
-    "wall_time_full_pass_s": 1.1
+    "ram_rss_running_gb": 1.655,
+    "wall_time_full_pass_s": 1.2
   },
   "checkpoint_info": {
     "framework": "ultralytics"

@@ -174,7 +174,11 @@ class TestSet:
             self.level_is_proxy = False
             return {im["id"]: im["level"] for im in imgs}
 
-        # (2) join theo file_name từ file RPC gốc
+        # (2) join theo file_name từ file RPC gốc.
+        #     Ưu tiên đường dẫn truyền vào; nếu không có thì tự dùng file mặc định
+        #     demo_app/data/instances_test2019.json (nếu tồn tại).
+        if level_source is None and cfg.LEVEL_SOURCE_FILE.exists():
+            level_source = cfg.LEVEL_SOURCE_FILE
         if level_source is not None:
             src = json.load(open(level_source))
             by_name = {im["file_name"]: im.get("level") for im in src["images"]}
@@ -229,15 +233,30 @@ class TestSet:
             out[mapping[i]].append(i)
         return dict(out)
 
-    def size_stats(self) -> dict:
-        """Đếm object theo phân nhóm size của COCO -> dùng để giải thích AP_medium = 0."""
-        areas = np.array([a["area"] for a in self.coco.dataset["annotations"]])
+    @staticmethod
+    def _count_sizes(areas: np.ndarray) -> dict:
         return {
             "total": int(len(areas)),
             "small (area < 32^2)": int((areas < 32 ** 2).sum()),
             "medium (32^2 <= area < 96^2)": int(((areas >= 32 ** 2) & (areas < 96 ** 2)).sum()),
             "large (area >= 96^2)": int((areas >= 96 ** 2).sum()),
         }
+
+    def size_stats(self) -> dict:
+        """Đếm object theo phân nhóm size của COCO -> dùng để giải thích AP_medium = 0.
+
+        Kèm cả số của bộ RPC gốc (instances_test2019.json) nếu có, để chứng minh
+        việc thiếu vật small/medium là ĐẶC ĐIỂM DATASET, không phải do cắt gold_dataset.
+        """
+        out = self._count_sizes(np.array([a["area"] for a in self.coco.dataset["annotations"]]))
+        if cfg.LEVEL_SOURCE_FILE.exists():
+            try:
+                src = json.load(open(cfg.LEVEL_SOURCE_FILE))
+                out["rpc_original_test2019"] = self._count_sizes(
+                    np.array([a["area"] for a in src["annotations"]]))
+            except Exception:
+                pass
+        return out
 
 
 # ==========================================================================
