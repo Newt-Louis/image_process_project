@@ -1,0 +1,173 @@
+{
+  "yolov11": {
+    "accuracy": {
+      "mAP50_95": 0.8799434133235045,
+      "mAP50": 0.9900990099009901,
+      "mAP75": 0.9773215612769925,
+      "AP_small": -1.0,
+      "AP_medium": 0.20198019801980197,
+      "AP_large": 0.8809581928634342,
+      "AR1": 0.07796954314720812,
+      "AR10": 0.6789847715736042,
+      "AR100": 0.9108629441624366,
+      "AR_small": -1.0,
+      "AR_medium": 0.2,
+      "AR_large": 0.9123092573753816
+    },
+    "operational": {
+      "TP": 982,
+      "FP": 3,
+      "FN": 3,
+      "precision": 0.997,
+      "recall": 0.997,
+      "f1": 0.997
+    },
+    "system": {
+      "latency": {
+        "n_samples": 80,
+        "mean_ms": 8.47,
+        "p50_ms": 8.3,
+        "p95_ms": 9.66,
+        "p99_ms": 11.76,
+        "min_ms": 7.42,
+        "max_ms": 14.2,
+        "fps": 118.03
+      },
+      "latency_during_full_eval": {
+        "n_samples": 80,
+        "mean_ms": 8.13,
+        "p50_ms": 8.09,
+        "p95_ms": 8.85,
+        "p99_ms": 9.03,
+        "min_ms": 7.46,
+        "max_ms": 9.46,
+        "fps": 122.99
+      },
+      "model_size_mb": 18.29,
+      "num_params": 9428179,
+      "num_params_m": 9.428,
+      "load_time_s": 0.613,
+      "vram_peak_after_load_gb": 0.035,
+      "vram_peak_infer_gb": 0.108,
+      "vram_peak_full_eval_gb": 0.125,
+      "ram_rss_before_load_gb": 0.72,
+      "ram_rss_after_load_gb": 0.87,
+      "ram_rss_running_gb": 1.655,
+      "wall_time_full_pass_s": 1.2
+    }
+  },
+  "fasterrcnn": {
+    "accuracy": {
+      "mAP50_95": 0.791211777225372,
+      "mAP50": 0.9850559733464216,
+      "mAP75": 0.9323165337520298,
+      "AP_small": -1.0,
+      "AP_medium": 0.0009057407982950761,
+      "AP_large": 0.7919061110172683,
+      "AR1": 0.07238578680203045,
+      "AR10": 0.631979695431472,
+      "AR100": 0.8342131979695431,
+      "AR_small": -1.0,
+      "AR_medium": 0.2,
+      "AR_large": 0.8355035605289929
+    },
+    "operational": {
+      "TP": 972,
+      "FP": 107,
+      "FN": 13,
+      "precision": 0.9008,
+      "recall": 0.9868,
+      "f1": 0.9419
+    },
+    "system": {
+      "latency": {
+        "n_samples": 80,
+        "mean_ms": 67.7,
+        "p50_ms": 67.32,
+        "p95_ms": 72.29,
+        "p99_ms": 73.91,
+        "min_ms": 62.12,
+        "max_ms": 75.46,
+        "fps": 14.77
+      },
+      "latency_during_full_eval": {
+        "n_samples": 80,
+        "mean_ms": 77.75,
+        "p50_ms": 74.66,
+        "p95_ms": 97.66,
+        "p99_ms": 119.94,
+        "min_ms": 65.95,
+        "max_ms": 121.32,
+        "fps": 12.86
+      },
+      "model_size_mb": 158.03,
+      "num_params": 41352281,
+      "num_params_m": 41.352,
+      "load_time_s": 0.445,
+      "vram_peak_after_load_gb": 0.224,
+      "vram_peak_infer_gb": 0.554,
+      "vram_peak_full_eval_gb": 0.554,
+      "ram_rss_before_load_gb": 1.657,
+      "ram_rss_after_load_gb": 1.776,
+      "ram_rss_running_gb": 1.815,
+      "wall_time_full_pass_s": 6.7
+    }
+  },
+  "retinanet": {
+    "accuracy": {
+      "mAP50_95": 0.7302956668415501,
+      "mAP50": 0.9801426074188592,
+      "mAP75": 0.872721892179239,
+      "AP_small": -1.0,
+      "AP_medium": 0.0,
+      "AP_large": 0.73177094378665,
+      "AR1": 0.06913705583756344,
+      "AR10": 0.5942131979695431,
+      "AR100": 0.7860913705583756,
+      "AR_small": -1.0,
+      "AR_medium": 0.0,
+      "AR_large": 0.7876907426246185
+    },
+    "operational": {
+      "TP": 970,
+      "FP": 516,
+      "FN": 15,
+      "precision": 0.6528,
+      "recall": 0.9848,
+      "f1": 0.7851
+    },
+    "system": {
+      "latency": {
+        "n_samples": 80,
+        "mean_ms": 62.19,
+        "p50_ms": 61.86,
+        "p95_ms": 65.98,
+        "p99_ms": 67.35,
+        "min_ms": 57.59,
+        "max_ms": 67.42,
+        "fps": 16.08
+      },
+      "latency_during_full_eval": {
+        "n_samples": 80,
+        "mean_ms": 75.98,
+        "p50_ms": 71.86,
+        "p95_ms": 106.36,
+        "p99_ms": 118.7,
+        "min_ms": 59.01,
+        "max_ms": 133.66,
+        "fps": 13.16
+      },
+      "model_size_mb": 123.2,
+      "num_params": 32221814,
+      "num_params_m": 32.222,
+      "load_time_s": 0.363,
+      "vram_peak_after_load_gb": 0.19,
+      "vram_peak_infer_gb": 0.362,
+      "vram_peak_full_eval_gb": 0.362,
+      "ram_rss_before_load_gb": 1.817,
+      "ram_rss_after_load_gb": 1.808,
+      "ram_rss_running_gb": 1.954,
+      "wall_time_full_pass_s": 6.7
+    }
+  }
+}

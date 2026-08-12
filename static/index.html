@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RPC Checkout — Demo 3 Model Detector</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <h1>RPC Checkout · Demo 3 Model Detector</h1>
+      <p class="sub">Object detection class-agnostic (1 lớp <code>product</code>) —
+         YOLOv11 · Faster R-CNN · RetinaNet, so sánh trực tiếp cùng điều kiện.</p>
+    </div>
+    <div class="badges" id="env-badges"></div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="upload">Ảnh thật (upload)</button>
+    <button class="tab" data-tab="gold">Tập test gold_dataset</button>
+    <button class="tab" data-tab="report">Kết quả thực nghiệm</button>
+  </nav>
+
+  <!-- ============ Cấu hình dùng chung ============ -->
+  <section class="panel controls">
+    <div class="control-group">
+      <label class="lbl">Model</label>
+      <div id="model-picker" class="chips"></div>
+    </div>
+    <div class="control-group">
+      <label class="lbl" for="conf">Confidence <span id="conf-val" class="mono">0.25</span></label>
+      <input type="range" id="conf" min="0.05" max="0.95" step="0.05" value="0.25">
+    </div>
+    <div class="control-group">
+      <label class="lbl" for="iou">NMS IoU <span id="iou-val" class="mono">0.50</span></label>
+      <input type="range" id="iou" min="0.3" max="0.9" step="0.05" value="0.5">
+    </div>
+  </section>
+
+  <!-- ============ TAB 1: upload ============ -->
+  <section class="tabpane active" id="pane-upload">
+    <div class="panel">
+      <div id="drop" class="drop">
+        <div class="drop-inner">
+          <div class="drop-icon">📷</div>
+          <p><strong>Kéo thả ảnh vào đây</strong> hoặc bấm để chọn file</p>
+          <p class="hint">Ảnh chụp thật từ camera / điện thoại, hoặc ảnh tải từ internet. JPG · PNG · WebP</p>
+        </div>
+        <img id="preview" alt="">
+        <input type="file" id="file-input" accept="image/*" hidden>
+      </div>
+      <div class="actions">
+        <button id="detect-btn" class="btn primary" disabled>Chạy nhận diện</button>
+        <button id="clear-btn" class="btn ghost">Xoá ảnh</button>
+        <span id="upload-meta" class="hint mono"></span>
+      </div>
+    </div>
+    <div id="upload-results"></div>
+  </section>
+
+  <!-- ============ TAB 2: gold dataset ============ -->
+  <section class="tabpane" id="pane-gold">
+    <div class="panel">
+      <div class="row wrap-row">
+        <div class="control-group">
+          <label class="lbl" for="gold-level">Lọc theo độ khó</label>
+          <select id="gold-level" class="select">
+            <option value="">Tất cả</option>
+            <option value="easy">easy (3–10 sản phẩm)</option>
+            <option value="medium">medium (11–15)</option>
+            <option value="hard">hard (16–20)</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label class="lbl" for="gold-id">Hoặc nhập image_id</label>
+          <div class="row gap">
+            <input type="number" id="gold-id" class="input mono" placeholder="vd 29972">
+            <button id="gold-go" class="btn primary">Chạy</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="lbl">Trang</label>
+          <div class="row gap">
+            <button id="gold-prev" class="btn ghost">‹ Trước</button>
+            <button id="gold-next" class="btn ghost">Sau ›</button>
+            <span id="gold-page" class="hint mono"></span>
+          </div>
+        </div>
+      </div>
+      <p class="hint">Chế độ này có <strong>ground-truth</strong> nên box được tô theo
+        <span class="k tp">TP</span> <span class="k fp">FP</span> <span class="k fn">FN (bỏ sót)</span>.</p>
+      <div id="gold-grid" class="grid-thumbs"></div>
+    </div>
+    <div id="gold-results"></div>
+  </section>
+
+  <!-- ============ TAB 3: report ============ -->
+  <section class="tabpane" id="pane-report">
+    <div class="panel" id="report-root"><p class="hint">Đang tải…</p></div>
+  </section>
+
+  <div id="loader" class="loader hidden">
+    <div class="spinner"></div><span id="loader-text">Đang chạy…</span>
+  </div>
+</div>
+<script src="/static/script.js"></script>
+</body>
+</html>

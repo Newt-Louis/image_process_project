@@ -1,0 +1,36 @@
+# Khóa version để thực nghiệm tái lập được (Mục 1 + Mục 6.3 của bản hướng dẫn).
+#
+# QUAN TRỌNG — torch phải khớp driver NVIDIA của máy:
+#   Driver CUDA 12.x  -> cài bản cu128 (lệnh dưới)
+#   Driver CUDA 13.x  -> đổi index-url sang .../cu130
+#   Không có GPU      -> đổi index-url sang .../cpu
+#
+#   pip install torch==2.9.1 torchvision==0.24.1 --index-url https://download.pytorch.org/whl/cu128
+#   pip install -r requirements.txt
+#
+torch==2.9.1
+torchvision==0.24.1
+
+# Detector
+ultralytics==8.4.94
+
+# Đánh giá & xử lý ảnh
+pycocotools==2.0.11
+opencv-python==5.0.0.93
+numpy==2.5.1
+pillow==12.3.0
+matplotlib==3.11.0
+
+# Web demo
+fastapi==0.139.0
+uvicorn==0.51.0
+python-multipart==0.0.32
+
+# Đo tài nguyên
+psutil==7.2.2
+tqdm
+
+# [->TN] Kịch bản F — quantize INT8 (không bắt buộc cho môn học)
+# onnx
+# onnxruntime
+# onnxslim

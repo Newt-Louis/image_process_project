@@ -1,0 +1,168 @@
+{
+  "legend": {
+    "xanh lá": "TP",
+    "đỏ": "FP",
+    "vàng": "FN (GT bị bỏ sót)",
+    "xám": "Ground truth"
+  },
+  "conf_threshold": 0.25,
+  "match_iou": 0.5,
+  "items": [
+    {
+      "criterion": "1_easy_sparse",
+      "description": "Ảnh dễ: ít vật, tách rời — baseline, cả 3 model nên detect tốt",
+      "image_id": 6,
+      "file_name": "20180824-15-50-57-480.jpg",
+      "n_gt": 3,
+      "level": "easy",
+      "output": "results/main/qualitative/1_easy_sparse__20180824-15-50-57-480.jpg",
+      "per_model": {
+        "yolov11": {
+          "TP": 3,
+          "FP": 0,
+          "FN": 0
+        },
+        "fasterrcnn": {
+          "TP": 3,
+          "FP": 0,
+          "FN": 0
+        },
+        "retinanet": {
+          "TP": 3,
+          "FP": 0,
+          "FN": 0
+        }
+      }
+    },
+    {
+      "criterion": "2_hard_dense",
+      "description": "Ảnh khó: nhiều vật + chồng lấp nhiều — phân hóa model rõ nhất",
+      "image_id": 22606,
+      "file_name": "20180927-14-59-56-1999.jpg",
+      "n_gt": 16,
+      "level": "hard",
+      "output": "results/main/qualitative/2_hard_dense__20180927-14-59-56-1999.jpg",
+      "per_model": {
+        "yolov11": {
+          "TP": 16,
+          "FP": 0,
+          "FN": 0
+        },
+        "fasterrcnn": {
+          "TP": 15,
+          "FP": 5,
+          "FN": 1
+        },
+        "retinanet": {
+          "TP": 15,
+          "FP": 9,
+          "FN": 1
+        }
+      }
+    },
+    {
+      "criterion": "3_high_density",
+      "description": "Mật độ cao (>=16 sản phẩm) — kiểm tra NMS và bỏ sót",
+      "image_id": 29468,
+      "file_name": "20180912-09-51-06-172.jpg",
+      "n_gt": 20,
+      "level": "hard",
+      "output": "results/main/qualitative/3_high_density__20180912-09-51-06-172.jpg",
+      "per_model": {
+        "yolov11": {
+          "TP": 20,
+          "FP": 0,
+          "FN": 0
+        },
+        "fasterrcnn": {
+          "TP": 19,
+          "FP": 14,
+          "FN": 1
+        },
+        "retinanet": {
+          "TP": 17,
+          "FP": 23,
+          "FN": 3
+        }
+      }
+    },
+    {
+      "criterion": "4_occlusion",
+      "description": "Sản phẩm chồng/che khuất nhau (IoU giữa các GT cao) — test recall",
+      "image_id": 241,
+      "file_name": "20180828-10-28-28-1054.jpg",
+      "n_gt": 4,
+      "level": "easy",
+      "output": "results/main/qualitative/4_occlusion__20180828-10-28-28-1054.jpg",
+      "per_model": {
+        "yolov11": {
+          "TP": 3,
+          "FP": 2,
+          "FN": 1
+        },
+        "fasterrcnn": {
+          "TP": 3,
+          "FP": 2,
+          "FN": 1
+        },
+        "retinanet": {
+          "TP": 3,
+          "FP": 2,
+          "FN": 1
+        }
+      }
+    },
+    {
+      "criterion": "5_false_positive",
+      "description": "Ảnh sinh nhiều FP nhất — nghi do bóng đổ/phản chiếu trên mặt bàn",
+      "image_id": 27810,
+      "file_name": "20180910-14-26-48-19.jpg",
+      "n_gt": 19,
+      "level": "hard",
+      "output": "results/main/qualitative/5_false_positive__20180910-14-26-48-19.jpg",
+      "per_model": {
+        "yolov11": {
+          "TP": 19,
+          "FP": 0,
+          "FN": 0
+        },
+        "fasterrcnn": {
+          "TP": 19,
+          "FP": 17,
+          "FN": 0
+        },
+        "retinanet": {
+          "TP": 18,
+          "FP": 23,
+          "FN": 1
+        }
+      }
+    },
+    {
+      "criterion": "6_disagreement",
+      "description": "YOLO và torchvision cho kết quả lệch nhau rõ nhất — đối chiếu trực tiếp",
+      "image_id": 582,
+      "file_name": "20180905-09-43-57-3312.jpg",
+      "n_gt": 4,
+      "level": "easy",
+      "output": "results/main/qualitative/6_disagreement__20180905-09-43-57-3312.jpg",
+      "per_model": {
+        "yolov11": {
+          "TP": 4,
+          "FP": 0,
+          "FN": 0
+        },
+        "fasterrcnn": {
+          "TP": 4,
+          "FP": 0,
+          "FN": 0
+        },
+        "retinanet": {
+          "TP": 2,
+          "FP": 5,
+          "FN": 2
+        }
+      }
+    }
+  ]
+}
