@@ -258,7 +258,7 @@ async function loadReport() {
   if (!data.available) {
     root.innerHTML = `<div class="err">Chưa có kết quả thực nghiệm.</div>
       <p class="hint">Chạy lần lượt:</p>
-      <pre class="mono" style="background:#0b0e13;padding:14px;border-radius:10px;border:1px solid var(--line)">
+      <pre class="mono" style="background:var(--surface-2);color:var(--ink);padding:14px;border-radius:10px;border:1px solid var(--line)">
 python -m experiments.run_eval
 python -m experiments.run_slices
 python -m experiments.run_qualitative
