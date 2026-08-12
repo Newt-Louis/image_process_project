@@ -12,5 +12,5 @@ results/*/qualitative/
 results/*/error_analysis/
 results/*/onnx/
 
-.ide
+.idea
 .venv
